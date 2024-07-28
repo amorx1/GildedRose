@@ -45,7 +45,7 @@ namespace GildedRose.Console
                 {
                     if (item.Quality < 50)
                     {
-                        item.Quality = item.Quality + 1;
+                        item.Quality++;
 
                         if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                         {
@@ -53,7 +53,7 @@ namespace GildedRose.Console
                             {
                                 if (item.Quality < 50)
                                 {
-                                    item.Quality = item.Quality + 1;
+                                    item.Quality++;
                                 }
                             }
 
@@ -61,7 +61,7 @@ namespace GildedRose.Console
                             {
                                 if (item.Quality < 50)
                                 {
-                                    item.Quality = item.Quality + 1;
+                                    item.Quality++;
                                 }
                             }
                         }
@@ -71,11 +71,11 @@ namespace GildedRose.Console
                 {
                     if (item.Quality > 0)
                     {
-                        item.Quality = item.Quality - 1;
+                        item.Quality--;
                     }
                 }
                 
-                item.SellIn = item.SellIn - 1;
+                item.SellIn--;
 
                 if (item.SellIn < 0)
                 {
@@ -83,20 +83,20 @@ namespace GildedRose.Console
                     {
                         if (item.Quality < 50)
                         {
-                            item.Quality = item.Quality + 1;
+                            item.Quality++;
                         }
                     }
                     else
                     {
                         if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                         {
-                            item.Quality = item.Quality - item.Quality;
+                            item.Quality = 0;
                         }
                         else
                         {
                             if (item.Quality > 0)
                             {
-                                item.Quality = item.Quality - 1;
+                                item.Quality--;
                             }
                         }
                     }
