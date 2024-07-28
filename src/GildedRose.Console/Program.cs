@@ -41,42 +41,27 @@ namespace GildedRose.Console
                 if (item.Name == "Sulfuras, Hand of Ragnaros")
                     continue;
                     
-                if (item.Name == "Aged Brie")
+                else if (item.Name == "Aged Brie")
                 {
                     if (item.Quality < 50) item.Quality++;
                     item.SellIn--;
                     if (item.Quality < 50 && item.SellIn < 0) item.Quality++;
-                    
-                    continue;
                 }
                 
-                if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (item.Quality < 50) item.Quality++;
                     if (item.Quality < 50 && item.SellIn < 11) item.Quality++;
                     if (item.Quality < 50 && item.SellIn < 6) item.Quality++;
                     item.SellIn--;
                     if (item.SellIn < 0) item.Quality = 0;
-
-                    continue;
                 }
                 
                 else
                 {
-                    if (item.Quality > 0)
-                    {
-                        item.Quality--;
-                    }
-                }
-                
-                item.SellIn--;
-
-                if (item.SellIn < 0)
-                {
-                    if (item.Quality > 0)
-                    {
-                        item.Quality--;
-                    }
+                    if (item.Quality > 0) item.Quality--;
+                    item.SellIn--;
+                    if (item.Quality > 0 && item.SellIn < 0) item.Quality--;
                 }
             }
         }
