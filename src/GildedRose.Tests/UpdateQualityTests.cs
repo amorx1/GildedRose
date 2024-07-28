@@ -164,5 +164,104 @@ namespace GildedRose.Tests
                 Assert.Equal(50, agedBrieItem.Quality);
             }            
         }
+
+        public class BackstagePassTests
+        {
+            public Program app;
+            public BackstagePassTests()
+            {
+                app = new Program { };
+            }
+
+            [Fact]
+            public void BackstagePassItem_SellIn_DecreasesByOne()
+            {
+                var backstagePassItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert",  Quality = 3, SellIn = 2 };
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, backstagePassItem.SellIn);
+            }
+            
+            [Fact]
+            public void BackstagePassItem_QualityIsZero_WhenSellInZero()
+            {
+                var backstagePassItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 0 };
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(0, backstagePassItem.Quality);
+            }
+            
+            [Fact]
+            public void BackstagePassItem_QualityIsZero_WhenSellInNegative()
+            {
+                var backstagePassItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = -1 };
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(0, backstagePassItem.Quality);
+            }
+
+            [Theory]
+            [InlineData(1, 1, 4)]
+            [InlineData(1, 2, 4)]
+            [InlineData(1, 3, 4)]
+            [InlineData(1, 4, 4)]
+            [InlineData(1, 5, 4)]
+            public void BackstagePassItem_QualityIncreasesByThree_WhenSellInBetweenOneAndFive(int quality, int sellIn, int expected)
+            {
+                var backstagePassItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = quality, SellIn = sellIn };
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(expected, backstagePassItem.Quality);
+            }
+            
+            [Theory]
+            [InlineData(1, 6, 3)]
+            [InlineData(1, 7, 3)]
+            [InlineData(1, 8, 3)]
+            [InlineData(1, 9, 3)]
+            [InlineData(1, 10, 3)]
+            public void BackstagePassItem_QualityIncreasesByTwo_WhenSellInBetweenSixAndTen(int quality, int sellIn, int expected)
+            {
+                var backstagePassItem =  new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = quality, SellIn = sellIn};
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(expected, backstagePassItem.Quality);
+            }
+            
+            [Theory]
+            [InlineData(1, 11, 2)]
+            [InlineData(1, 12, 2)]
+            [InlineData(1, 13, 2)]
+            public void BackstagePassItem_QualityIncreasesByOne_WhenSellInElevenOrGreater(int quality, int sellIn, int expected)
+            {
+                var backstagePassItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = quality, SellIn = sellIn };
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+                
+                Assert.Equal(expected, backstagePassItem.Quality);
+            }
+            
+            [Fact]
+            public void BackstagePassItem_MaxQuality_IsFifty()
+            {
+                var backstagePassItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 49, SellIn = 2 };
+                app.Items = new List<Item> { backstagePassItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(50, backstagePassItem.Quality);
+            }
+        }
     }
 }
