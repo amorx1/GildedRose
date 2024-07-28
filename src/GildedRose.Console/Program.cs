@@ -40,29 +40,34 @@ namespace GildedRose.Console
             {
                 if (item.Name == "Sulfuras, Hand of Ragnaros")
                     continue;
+                    
+                if (item.Name == "Aged Brie")
+                {
+                    if (item.Quality < 50) item.Quality++;
+                    item.SellIn--;
+                    if (item.Quality < 50 && item.SellIn < 0) item.Quality++;
+                    continue;
+                }
                 
-                if (item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (item.Quality < 50)
                     {
                         item.Quality++;
 
-                        if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                        if (item.SellIn < 11)
                         {
-                            if (item.SellIn < 11)
+                            if (item.Quality < 50)
                             {
-                                if (item.Quality < 50)
-                                {
-                                    item.Quality++;
-                                }
+                                item.Quality++;
                             }
+                        }
 
-                            if (item.SellIn < 6)
+                        if (item.SellIn < 6)
+                        {
+                            if (item.Quality < 50)
                             {
-                                if (item.Quality < 50)
-                                {
-                                    item.Quality++;
-                                }
+                                item.Quality++;
                             }
                         }
                     }
@@ -79,25 +84,15 @@ namespace GildedRose.Console
 
                 if (item.SellIn < 0)
                 {
-                    if (item.Name == "Aged Brie")
+                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
-                        if (item.Quality < 50)
-                        {
-                            item.Quality++;
-                        }
+                        item.Quality = 0;
                     }
                     else
                     {
-                        if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                        if (item.Quality > 0)
                         {
-                            item.Quality = 0;
-                        }
-                        else
-                        {
-                            if (item.Quality > 0)
-                            {
-                                item.Quality--;
-                            }
+                            item.Quality--;
                         }
                     }
                 }
