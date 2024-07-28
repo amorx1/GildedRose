@@ -36,5 +36,69 @@ namespace GildedRose.Tests
                 Assert.Equal(0, sulfurasItem.SellIn);
             }
 		}
+
+        public class RegularItemsTests
+        {
+            public Program app;
+            public RegularItemsTests()
+            {
+                app = new Program { };
+            }
+
+            [Fact]
+            public void RegularItem_SellIn_DecreasesByOne()
+            {
+                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = 2 };
+                app.Items = new List<Item> { regularItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, regularItem.SellIn);
+            }
+        
+            [Fact]
+            public void RegularItem_QualityDecreasesByOne_WhenSellInPositive()
+            {
+                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = 2 };
+                app.Items = new List<Item> { regularItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(2, regularItem.Quality);
+            }
+
+            [Fact]
+            public void RegularItem_QualityDecreasesByTwo_WhenSellInZero()
+            {
+                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = 0 };
+                app.Items = new List<Item> { regularItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, regularItem.Quality);
+            }
+            
+            [Fact]
+            public void RegularItem_QualityDecreasesByTwo_WhenSellInNegative()
+            {
+                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = -1 };
+                app.Items = new List<Item> { regularItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, regularItem.Quality);
+            }
+
+            [Fact]
+            public void RegularItem_MinimumQuality_IsZero()
+            {
+                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 1, SellIn = -1 };
+                app.Items = new List<Item> { regularItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(0, regularItem.Quality);
+            }
+        }
     }
 }
