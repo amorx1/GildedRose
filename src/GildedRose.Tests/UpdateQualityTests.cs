@@ -45,10 +45,12 @@ namespace GildedRose.Tests
                 app = new Program { };
             }
 
-            [Fact]
-            public void RegularItem_SellIn_DecreasesByOne()
+            [Theory]
+            [InlineData("+5 Dexterity Vest")]
+            [InlineData("Elixir of the Mongoose")]
+            public void RegularItem_SellIn_DecreasesByOne(string itemName)
             {
-                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = 2 };
+                var regularItem = new Item { Name = itemName, Quality = 3, SellIn = 2 };
                 app.Items = new List<Item> { regularItem };
 
                 app.UpdateQuality();
@@ -56,10 +58,12 @@ namespace GildedRose.Tests
                 Assert.Equal(1, regularItem.SellIn);
             }
         
-            [Fact]
-            public void RegularItem_QualityDecreasesByOne_WhenSellInPositive()
+            [Theory]
+            [InlineData("+5 Dexterity Vest")]
+            [InlineData("Elixir of the Mongoose")]
+            public void RegularItem_QualityDecreasesByOne_WhenSellInPositive(string itemName)
             {
-                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = 2 };
+                var regularItem = new Item { Name = itemName, Quality = 3, SellIn = 2 };
                 app.Items = new List<Item> { regularItem };
 
                 app.UpdateQuality();
@@ -67,10 +71,12 @@ namespace GildedRose.Tests
                 Assert.Equal(2, regularItem.Quality);
             }
 
-            [Fact]
-            public void RegularItem_QualityDecreasesByTwo_WhenSellInZero()
+            [Theory]
+            [InlineData("+5 Dexterity Vest")]
+            [InlineData("Elixir of the Mongoose")]
+            public void RegularItem_QualityDecreasesByTwo_WhenSellInZero(string itemName)
             {
-                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = 0 };
+                var regularItem = new Item { Name = itemName, Quality = 3, SellIn = 0 };
                 app.Items = new List<Item> { regularItem };
 
                 app.UpdateQuality();
@@ -78,10 +84,12 @@ namespace GildedRose.Tests
                 Assert.Equal(1, regularItem.Quality);
             }
             
-            [Fact]
-            public void RegularItem_QualityDecreasesByTwo_WhenSellInNegative()
+            [Theory]
+            [InlineData("+5 Dexterity Vest")]
+            [InlineData("Elixir of the Mongoose")]
+            public void RegularItem_QualityDecreasesByTwo_WhenSellInNegative(string itemName)
             {
-                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 3, SellIn = -1 };
+                var regularItem = new Item { Name = itemName, Quality = 3, SellIn = -1 };
                 app.Items = new List<Item> { regularItem };
 
                 app.UpdateQuality();
@@ -89,10 +97,12 @@ namespace GildedRose.Tests
                 Assert.Equal(1, regularItem.Quality);
             }
 
-            [Fact]
-            public void RegularItem_MinimumQuality_IsZero()
+            [Theory]
+            [InlineData("+5 Dexterity Vest")]
+            [InlineData("Elixir of the Mongoose")]
+            public void RegularItem_MinimumQuality_IsZero(string itemName)
             {
-                var regularItem = new Item { Name = "+5 Dexterity Vest", Quality = 1, SellIn = -1 };
+                var regularItem = new Item { Name = itemName, Quality = 1, SellIn = -1 };
                 app.Items = new List<Item> { regularItem };
 
                 app.UpdateQuality();
