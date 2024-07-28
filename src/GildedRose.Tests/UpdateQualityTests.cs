@@ -100,5 +100,69 @@ namespace GildedRose.Tests
                 Assert.Equal(0, regularItem.Quality);
             }
         }
+
+        public class AgedBrieItemsTests
+        {
+            public Program app;
+            public AgedBrieItemsTests()
+            {
+                app = new Program { };
+            }
+
+            [Fact]
+            public void AgedBrieItem_SellIn_DecreasesByOne()
+            {
+                var agedBrieItem = new Item { Name = "Aged Brie", Quality = 3, SellIn = 2 };
+                app.Items = new List<Item> { agedBrieItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, agedBrieItem.SellIn);
+            }
+
+            [Fact]
+            public void AgedBrieItem_QualityIncreasesByOne_WhenSellInPositive()
+            {
+                var agedBrieItem = new Item { Name = "Aged Brie", Quality = 3, SellIn = 2 };
+                app.Items = new List<Item> { agedBrieItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(4, agedBrieItem.Quality);
+            }
+
+            [Fact]
+            public void AgedBrieItem_QualityIncreasesByTwo_WhenSellInZero()
+            {
+                var agedBrieItem = new Item { Name = "Aged Brie", Quality = 3, SellIn = 0 };
+                app.Items = new List<Item> { agedBrieItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(5, agedBrieItem.Quality);
+            }
+            
+            [Fact]
+            public void AgedBrieItem_QualityIncreasesByTwo_WhenSellInNegative()
+            {
+                var agedBrieItem = new Item { Name = "Aged Brie", Quality = 3, SellIn = -1 };
+                app.Items = new List<Item> { agedBrieItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(5, agedBrieItem.Quality);
+            }            
+
+            [Fact]
+            public void AgedBrieItem_MaxQuality_IsFifty()
+            {
+                var agedBrieItem = new Item { Name = "Aged Brie", Quality = 49, SellIn = -2 };
+                app.Items = new List<Item> { agedBrieItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(50, agedBrieItem.Quality);
+            }            
+        }
     }
 }
