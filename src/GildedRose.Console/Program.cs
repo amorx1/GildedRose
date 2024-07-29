@@ -49,27 +49,34 @@ namespace GildedRose.Console
                     
                 else if (item.Name == "Aged Brie")
                 {
-                    change++;
-                    item.SellIn--;
-                    if (item.SellIn < 0) change++;
+                    change = item.SellIn switch
+                    {
+                        > 0 => +1,
+                        _ => +2
+                    };
                 }
                 
                 else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    change++;
-                    if (item.SellIn < 11) change++;
-                    if (item.SellIn < 6) change++;
-                    item.SellIn--;
-                    if (item.SellIn < 0) change = -(item.Quality);
+                    change = item.SellIn switch
+                    {
+                        > 10 => +1,
+                        > 5 => +2,
+                        > 0 => +3,
+                        _ => -(item.Quality)
+                    };
                 }
                 
                 else
                 {
-                    change--;
-                    item.SellIn--;
-                    if (item.SellIn < 0) change--;
+                    change = item.SellIn switch
+                    {
+                        > 0 => -1,
+                        _ => -2
+                    };
                 }
-
+                
+                item.SellIn--;
                 item.Quality = Math.Clamp(item.Quality + change, MinQuality, MaxQuality);
             }
         }
