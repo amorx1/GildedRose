@@ -1,5 +1,5 @@
 
-using GildedRose.Console.Items;
+using GildedRose.Console.Models;
 
 namespace GildedRose.Console.Factory
 {

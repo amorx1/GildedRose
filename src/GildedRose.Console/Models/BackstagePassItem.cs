@@ -1,10 +1,14 @@
 
-namespace GildedRose.Console.Items
+namespace GildedRose.Console.Models
 {
+    /// <summary>
+    /// BackstagePass item implementaition
+    /// </summary>
     public class BackstagePassItem : ItemBase
     {
         public BackstagePassItem(Item item) : base(item) { }
 
+        /// <inheritdoc/>
         protected override int ComputeQualityChange()
         {
             return Item.SellIn switch
