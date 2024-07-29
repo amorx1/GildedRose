@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRose.Console
 {
@@ -36,33 +37,40 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
+            var MinQuality = 0;
+            var MaxQuality = 50;
+            
             foreach (var item in Items)
             {
+                int change = 0;
+                
                 if (item.Name == "Sulfuras, Hand of Ragnaros")
                     continue;
                     
                 else if (item.Name == "Aged Brie")
                 {
-                    if (item.Quality < 50) item.Quality++;
+                    change++;
                     item.SellIn--;
-                    if (item.Quality < 50 && item.SellIn < 0) item.Quality++;
+                    if (item.SellIn < 0) change++;
                 }
                 
                 else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (item.Quality < 50) item.Quality++;
-                    if (item.Quality < 50 && item.SellIn < 11) item.Quality++;
-                    if (item.Quality < 50 && item.SellIn < 6) item.Quality++;
+                    change++;
+                    if (item.SellIn < 11) change++;
+                    if (item.SellIn < 6) change++;
                     item.SellIn--;
-                    if (item.SellIn < 0) item.Quality = 0;
+                    if (item.SellIn < 0) change = -(item.Quality);
                 }
                 
                 else
                 {
-                    if (item.Quality > 0) item.Quality--;
+                    change--;
                     item.SellIn--;
-                    if (item.Quality > 0 && item.SellIn < 0) item.Quality--;
+                    if (item.SellIn < 0) change--;
                 }
+
+                item.Quality = Math.Clamp(item.Quality + change, MinQuality, MaxQuality);
             }
         }
 
