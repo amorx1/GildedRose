@@ -37,7 +37,7 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            TypedItemFactory typedItemFactory = new(); // Should come from DI ideally
+            TypedItemFactory typedItemFactory = new(); // Implementation of ITypedItemFactory should come from DI ideally
             foreach (var item in Items)
             {
                 typedItemFactory

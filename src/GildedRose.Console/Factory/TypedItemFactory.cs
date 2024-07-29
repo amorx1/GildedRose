@@ -3,6 +3,7 @@ using GildedRose.Console.Items;
 
 namespace GildedRose.Console.Factory
 {
+    /// <inheritdoc/>
     public class TypedItemFactory : ITypedItemFactory
     {
         public ItemBase GetItem(Item item)
