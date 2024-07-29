@@ -273,5 +273,70 @@ namespace GildedRose.Tests
                 Assert.Equal(50, backstagePassItem.Quality);
             }
         }
+        
+        public class ConjuredItemsTests
+        {
+            public Program app;
+            public ConjuredItemsTests()
+            {
+                app = new Program { };
+            }
+
+            [Fact]
+            public void ConjuredItem_SellIn_DecreasesByOne()
+            {
+                var conjuredItem = new Item { Name = "Conjured Mana Cake", Quality = 3, SellIn = 2 };
+                app.Items = new List<Item> { conjuredItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, conjuredItem.SellIn);
+
+            }
+
+            [Fact]
+            public void ConjuredItems_QualityDecreasesByTwo_WhenSellInPositive()
+            {
+                var conjuredItem = new Item { Name = "Conjured Mana Cake", Quality = 5, SellIn = 1 };
+                app.Items = new List<Item> { conjuredItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(3, conjuredItem.Quality);
+            }
+
+            [Fact]
+            public void ConjuredItems_QualityDecreasesByFour_WhenSellInZero()
+            {
+                var conjuredItem = new Item { Name = "Conjured Mana Cake", Quality = 5, SellIn = 0 };
+                app.Items = new List<Item> { conjuredItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, conjuredItem.Quality);
+            }
+            
+            [Fact]
+            public void ConjuredItems_QualityDecreasesByFour_WhenSellInNegative()
+            {
+                var conjuredItem = new Item { Name = "Conjured Mana Cake", Quality = 5, SellIn = -1 };
+                app.Items = new List<Item> { conjuredItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(1, conjuredItem.Quality);
+            }
+
+            [Fact]
+            public void ConjuredItem_MinimumQuality_IsZero()
+            {
+                var conjuredItem = new Item { Name = "Conjured Mana Cake", Quality = 1, SellIn = -3 };
+                app.Items = new List<Item> { conjuredItem };
+
+                app.UpdateQuality();
+
+                Assert.Equal(0, conjuredItem.Quality);
+            }
+        }
     }
 }
