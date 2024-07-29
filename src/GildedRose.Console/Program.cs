@@ -54,12 +54,11 @@ namespace GildedRose.Console
                         break;
 
                     default:
-                        new ItemBase(item).UpdateQuality();
+                        new RegularItem(item).UpdateQuality();
                         break;
                 };
             }
         }
-
     }
 
     public class Item

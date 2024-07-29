@@ -11,5 +11,10 @@ namespace GildedRose.Console.Items
         {
             return;
         }
+
+        protected override int ComputeQualityChange()
+        {
+            return 0;
+        }
     }
 }

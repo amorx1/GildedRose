@@ -2,7 +2,7 @@ using System;
 
 namespace GildedRose.Console.Items
 {
-	public class ItemBase
+	public abstract class ItemBase
     {
         protected int MaxQuality = 50;
         protected int MinQuality = 0;
@@ -18,14 +18,6 @@ namespace GildedRose.Console.Items
             Item.Quality = Math.Clamp(Item.Quality + change, MinQuality, MaxQuality);
         }
 
-		// Regular item quality implementation
-        protected virtual int ComputeQualityChange()
-        {
-            return Item.SellIn switch
-            {
-                > 0 => -1,
-                _ => -2
-            };
-        }
+        protected abstract int ComputeQualityChange();
     }
 }
