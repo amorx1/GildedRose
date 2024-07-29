@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using GildedRose.Console.Items;
 
 namespace GildedRose.Console
 {
@@ -37,47 +37,26 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            var MinQuality = 0;
-            var MaxQuality = 50;
-            
             foreach (var item in Items)
             {
-                int change = 0;
-                
-                if (item.Name == "Sulfuras, Hand of Ragnaros")
-                    continue;
-                    
-                else if (item.Name == "Aged Brie")
+                switch (item.Name)
                 {
-                    change = item.SellIn switch
-                    {
-                        > 0 => +1,
-                        _ => +2
-                    };
-                }
-                
-                else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    change = item.SellIn switch
-                    {
-                        > 10 => +1,
-                        > 5 => +2,
-                        > 0 => +3,
-                        _ => -(item.Quality)
-                    };
-                }
-                
-                else
-                {
-                    change = item.SellIn switch
-                    {
-                        > 0 => -1,
-                        _ => -2
-                    };
-                }
-                
-                item.SellIn--;
-                item.Quality = Math.Clamp(item.Quality + change, MinQuality, MaxQuality);
+                    case ("Sulfuras, Hand of Ragnaros"):
+                        new SulfurasItem(item).UpdateQuality();
+                        break;
+
+                    case ("Aged Brie"):
+                        new AgedBrieItem(item).UpdateQuality();
+                        break;
+                        
+                    case ("Backstage passes to a TAFKAL80ETC concert"):
+                        new BackstagePassItem(item).UpdateQuality();
+                        break;
+
+                    default:
+                        new ItemBase(item).UpdateQuality();
+                        break;
+                };
             }
         }
 
