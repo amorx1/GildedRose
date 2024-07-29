@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GildedRose.Console.Items;
+using GildedRose.Console.Factory;
 
 namespace GildedRose.Console
 {
@@ -37,26 +37,12 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
+            TypedItemFactory typedItemFactory = new(); // Should come from DI ideally
             foreach (var item in Items)
             {
-                switch (item.Name)
-                {
-                    case ("Sulfuras, Hand of Ragnaros"):
-                        new SulfurasItem(item).UpdateQuality();
-                        break;
-
-                    case ("Aged Brie"):
-                        new AgedBrieItem(item).UpdateQuality();
-                        break;
-                        
-                    case ("Backstage passes to a TAFKAL80ETC concert"):
-                        new BackstagePassItem(item).UpdateQuality();
-                        break;
-
-                    default:
-                        new RegularItem(item).UpdateQuality();
-                        break;
-                };
+                typedItemFactory
+                    .GetItem(item)
+                    .UpdateQuality();
             }
         }
     }
